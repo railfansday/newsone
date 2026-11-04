@@ -1,0 +1,36 @@
+name: Perbaiki Canonical HTML
+
+on:
+  workflow_dispatch: # Hanya berjalan saat tombol ditekan manual
+
+permissions:
+  contents: write
+
+jobs:
+  perbaiki:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Checkout kode
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Jalankan Skrip Perbaikan
+        run: python perbaiki_canonical.py
+
+      - name: Commit & Push Perbaikan
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          
+          # Tambahkan semua file HTML dan skrip
+          git add *.html perbaiki_canonical.py || true
+          
+          git diff --staged --quiet && echo "Tidak ada perubahan" && exit 0
+          
+          git commit -m "Perbaiki tag canonical [skip ci]"
+          git push
