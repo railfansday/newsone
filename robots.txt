@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://railfansday.github.io/berita1jam/sitemap.xml
