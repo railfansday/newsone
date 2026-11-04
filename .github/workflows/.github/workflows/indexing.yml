@@ -1,0 +1,32 @@
+name: Kirim URL ke Google Indexing API
+
+on:
+  workflow_dispatch: # Hanya berjalan saat tombol ditekan manual
+  schedule:
+    - cron: '0 0 * * *' # Opsional: berjalan otomatis setiap hari jam 00:00 UTC (07:00 WIB)
+
+jobs:
+  index:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout kode
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests beautifulsoup4 lxml google-auth google-auth-httplib2
+
+      - name: Jalankan Skrip Indexing
+        env:
+          # ✅ Memanggil Secret yang sudah dibuat di Langkah 1
+          GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
+        run: python indexing_api.py
