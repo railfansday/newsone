@@ -2,7 +2,7 @@ import re
 from pathlib import Path
 
 # ⚠️ GANTI DENGAN URL YANG BENAR
-BASE_URL_BENAR = "https://railfansday.github.io/spesial4" 
+BASE_URL_BENAR = "https://railfansday.github.io/newsone" 
 
 def perbaiki():
     print(f"[*] Memindai file HTML di folder: {Path('.').resolve()}")
